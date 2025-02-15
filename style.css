@@ -1,0 +1,9 @@
+body {
+    background-color: rgb(255, 243, 236);
+    padding: 9px;
+}
+
+p {
+    border-radius: 9px;
+    margin: 0%;
+}
