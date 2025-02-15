@@ -1,0 +1,122 @@
+HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HL Interpreter Source Code to HTML/JS</title>
+    <style>
+        body {
+            font-family: Times New Roman, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1> Source Code to HTML/JS Interpreter</h1>
+    <textarea id="sourceCode" placeholder="Enter a source code here.."></textarea>
+    <br>
+    <button onclick="interpret()">Run Interpreter</button>
+
+    <h2> Results </h2>
+    <h3> No Spaces </h3>
+    <pre id="noSpace"></pre>
+
+    <h3> Reserved Words/Symbols </h3>
+    <pre id="reserveSymbols"></pre>
+
+    <h3> Error/s </h3>
+    <pre id="syntaxError"></pre>
+
+    <script src="compile.js"></script>
+</body>
+</html>
+
+
+Js
+
+
+const reserveWords = ["integer", "double", "if", "output"];
+const symbols = [":=", "<<", ">", "<", "==", "!=", "="];
+
+function removeSpace(source) {
+    return source.replace(/\s+/g, ''); // Removing all spaces
+}
+
+function extractWordsandSymbols(source) {
+    const reserveFound = [];
+    const symbolsFound = [];
+
+    reserveWords.forEach(word => {
+        if (source.includes(word)) {
+            reserveFound.push(word);
+        }
+    });
+
+    symbols.forEach(symbol => {
+        if (source.includes(symbol)) {
+            symbolsFound.push(symbol);
+        }
+    });
+
+    return { reserveFound, symbolsFound };
+}
+
+function checkSyntax(source) {
+    const syntaxErrors = [];
+    const lines = source.split(";").map(line => line.trim()); // Splitting the source code into lines
+
+    lines.forEach((line, index) => {
+        if (!line) return; // Skip empty lines
+
+        // Matching lines with valid HL syntax
+        if (!(
+            line.match(/^\w+: integer$/) ||              // Declaration for integer variables
+            line.match(/^\w+: double$/) ||               // Declaration for double variables
+            line.match(/^\w+:=\s*\d+(\.\d+)?$/) ||       // Assignment statement for integer or double
+            line.match(/^output<<\w+(\+\w+)*$/) ||       // Output variable or arithmetic expression
+            line.match(/^output<<\".*\"$/) ||            // Output a string literal
+            line.match(/^if\(\w+[><=!]=?\w+\)$/)         // If condition
+        )) {
+            syntaxErrors.push(`Syntax Error: ${line}`); // Log errors
+        }
+
+        // Check if the output statement follows an if statement
+        if (line.match(/^if\(\w+[><=!]=?\w+\)$/) && index + 1 < lines.length) {
+            const nextLine = lines[index + 1].trim();
+            if (!nextLine.startsWith("output<<")) {
+                syntaxErrors.push(`Syntax Error: Expected output after if statement: ${line}`);
+            }
+        }
+    });
+
+    return syntaxErrors.length ? syntaxErrors : ["NO ERROR(S) FOUND"];
+}
+
+function interpret() {
+    const sourceCode = document.getElementById("sourceCode").value;
+
+    // Removing spaces from the code and displaying it
+    const noSpaces = removeSpace(sourceCode);
+    document.getElementById("noSpace").innerText = noSpaces;
+
+    // Extract reserved words and symbols and display them
+    const { reserveFound, symbolsFound } = extractWordsandSymbols(sourceCode);
+    document.getElementById("reserveSymbols").innerText = `Reserved Words: ${reserveFound.join(', ')}\nSymbols: ${symbolsFound.join(', ')}`;
+
+    // Checking for syntax errors
+    const syntaxErrors = checkSyntax(sourceCode);
+
+    // Displaying either the errors or a message saying "NO ERROR(S) FOUND"
+    document.getElementById("syntaxError").innerText = syntaxErrors.join('\n');
+}
