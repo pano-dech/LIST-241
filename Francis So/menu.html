@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tummy Pillow - Menu</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdeee3;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fdeee3;
+            padding: 10px 20px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .active {
+            color: #c97356;
+            font-weight: bold;
+        }
+        .cart-button {
+            background-color: #c97356;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Hero Image */
+        .hero {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 24px;
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        /* Deals & Menu Sections */
+        .deals-container,
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Menu Cards */
+        .menu-card {
+            display: flex;
+            align-items: center;
+            background-color: #c97356;
+            padding: 15px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 500px;
+            color: white;
+            text-align: left;
+            position: relative;
+        }
+
+        .menu-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .menu-text {
+            flex-grow: 1;
+        }
+		
+		.menu-card a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Order Button */
+        .order-button {
+            background-color: #c97356;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .order-button:hover {
+            background-color: #a55a42;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <img src="images/logo.png" alt="Tummy Pillow Logo" height="50">
+        <div>
+            <a href="who we are.html"  class="active">Who We Are</a>
+            <a href="menu.html" class="active" style="color: #c97356; font-weight: bold;">Menu</a>
+            <a href="profile.html"  class="active">Profile</a>
+        </div>
+        <button class="cart-button">Cart (0)</button>
+    </div>
+
+    <!-- Hero Image -->
+    <img src="images/bg.png" alt="Hero" class="hero">
+
+    <!-- Hot Deals Section -->
+    <div class="section-title">Hot Deals!</div>
+    <div class="deals-container">
+        <div class="menu-card">
+            <img src="images/garlic-bun.jpg" alt="Garlic Cream Cheese Buns">
+            <div class="menu-text">
+                <a href="garlic-buns.html">Garlic Cream Cheese Buns Deal</a><br>
+                Box of 6 Regular Size Buns - 420 PHP<br>
+                Box of 4 Big Size Buns - 420 PHP
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <img src="images/revel-bars.jpg" alt="Chocolate Revel Bars">
+            <div class="menu-text">
+                <a href="chocolate-revel-bars.html">Chocolate Revel Bars Deal</a><br>
+                Box of 16 Bars - 440 PHP
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Menu Section -->
+    <div class="section-title">Our Menu</div>
+    <div class="menu-container">
+        <div class="menu-card">
+            <img src="images/cinnamon-rolls.jpg" alt="Cinnamon Rolls">
+            <div class="menu-text">
+                <a href="cinnamon-rolls.html">Cinnamon Rolls</a><br>
+                Box of 4 - 420 PHP
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <img src="images/empanadas.jpg" alt="Empanadas">
+            <div class="menu-text">
+                <a href="empanadas.html">Empanadas</a> (2 Days Advanced Order)<br>
+                Box of 4 - 260 PHP<br>
+                Box of 12 - 780 PHP
+            </div>
+        </div>
+		<div class="menu-card">
+            <img src="images/bananachoco.jpg" alt="Banana Choco-Chip">
+            <div class="menu-text">
+                <a href="bananachoco.html">Banana Choco-Chip Loaf</a> (2 Days Advanced Order)<br>
+                Box of 4 - 260 PHP<br>
+                Box of 12 - 780 PHP
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Now Button -->
+    <button class="order-button">Order Now!</button>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tummy Pillow - Banana Choco-Chip Loaf</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdeee3;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fdeee3;
+            padding: 10px 20px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .active {
+            color: #c97356;
+            font-weight: bold;
+        }
+        .cart-button {
+            background-color: #c97356;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+		/* Hero Image */
+        .hero {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+        }
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .food-title {
+            color: #c97356;
+            font-size: 28px;
+            font-style: italic;
+        }
+        .food-price {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .food-description {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .order-button {
+            background-color: #c97356;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .order-button:hover {
+            background-color: #a55a42;
+        }
+		.back-button {
+            background-color: #c97356;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+		.back-button:hover {
+            background-color: #a55a42;
+        }
+        .food-image {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .food-thumbnail {
+            width: 150px;
+            border-radius: 50%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="images/logo.png" alt="Tummy Pillow Logo" height="50">
+        <div>
+            <a href="who we are.html">Who We Are</a>
+            <a href="menu.html" class="active">Menu</a>
+            <a href="profile.html">Profile</a>
+        </div>
+        <button class="cart-button">Cart (0)</button>
+    </div>
+	
+	<!-- Hero Image -->
+    <img src="images/bg.png" alt="Hero" class="hero">
+
+    <div class="content">
+        <img src="images/banana-loaf.jpg" alt="Banana Choco-Chip Loaf" class="food-image">
+        <h2 class="food-title">Banana Choco-Chip Loaf</h2>
+        <p class="food-price">One (1) Loaf for 200 PHP</p>
+        <p class="food-description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+        </p>
+        <img src="images/banana-slice.jpg" alt="Banana Choco-Chip Slice" class="food-thumbnail">
+        <br>
+        <button class="order-button">Order Now!</button>
+		<button class="back-button"><a href="menu.html" class="back-button">Go Back</a></button>
+    </div>
+</body>
+</html>

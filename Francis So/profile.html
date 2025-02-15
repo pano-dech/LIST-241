@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Tummy Pillow</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdeee3;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fdeee3;
+            padding: 10px 20px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .cart-button {
+            background-color: #c97356;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Hero Image */
+        .hero {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+        }
+
+        /* Profile Section */
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Profile Picture */
+        .profile-picture {
+            width: 180px;
+            height: 180px;
+            background-color: #c97356;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .profile-label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Profile Details */
+        .profile-details {
+            background-color: #c97356;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            width: 300px;
+            text-align: left;
+        }
+
+        .profile-details label {
+            font-weight: bold;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .profile-details input {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <img src="images/logo.png" alt="Tummy Pillow Logo" height="50">
+        <div>
+            <a href="who we are.html"  class="active">Who We Are</a>
+            <a href="menu.html"  class="active">Menu</a>
+            <a href="profile.html" style="color: #c97356; font-weight: bold;">Profile</a>
+        </div>
+        <button class="cart-button">Cart (0)</button>
+    </div>
+
+    <!-- Hero Image -->
+    <img src="images/bg.png" alt="Hero" class="hero">
+
+    <!-- Profile Section -->
+    <div class="profile-container">
+        <!-- Profile Picture -->
+        <div>
+            <div class="profile-picture">Photo</div>
+            <div class="profile-label">Profile Picture</div>
+        </div>
+
+        <!-- Profile Details -->
+        <div class="profile-details">
+            <label>ID:</label>
+            <input type="text" placeholder="Your ID">
+            <label>Name:</label>
+            <input type="text" placeholder="Enter your name">
+            <label>Password:</label>
+            <input type="password" placeholder="Enter your password">
+            <label>Phone Number:</label>
+            <input type="text" placeholder="Enter phone number">
+            <label>Email:</label>
+            <input type="email" placeholder="Enter email">
+        </div>
+    </div>
+
+</body>
+</html>

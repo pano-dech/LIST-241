@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our History - Tummy Pillow</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdeee3;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fdeee3;
+            padding: 10px 20px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .active {
+            color: #c97356;
+            font-weight: bold;
+        }
+        .cart-button {
+            background-color: #c97356;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Hero Image */
+        .hero {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+        }
+
+        /* Our History Section */
+        .history-section {
+            display: flex;
+            align-items: center;
+            padding: 40px 10%;
+            gap: 20px;
+        }
+
+        .history-text {
+            flex: 1;
+        }
+
+        .history-text h2 {
+            font-size: 28px;
+            font-style: italic;
+            color: black;
+        }
+
+        .history-text p {
+            font-size: 16px;
+            color: black;
+            line-height: 1.6;
+        }
+
+        .history-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #c97356;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: white;
+            font-size: 18px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .history-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .history-image {
+                margin: 20px 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <img src="images/logo.png" alt="Tummy Pillow Logo" height="50">
+        <div>
+            <a href="#" class="active" style="color: #c97356; font-weight: bold;">Who We Are</a>
+            <a href="menu.html"  class="active">Menu</a>
+            <a href="profile.html"  class="active">Profile</a>
+        </div>
+        <button class="cart-button"><a href="cart.html">Cart (0)</button></a>
+    </div>
+
+    <!-- Hero Image -->
+    <img src="images/bg.png" alt="Hero" class="hero">
+
+    <!-- Our History Section -->
+    <div class="history-section">
+        <div class="history-image">(Photo)</div>
+        <div class="history-text">
+            <h2>Our History...</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur...
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

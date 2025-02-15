@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tummy Pillow Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fbeee0;
+        }
+        
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #f6e1d3;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        
+        .cart-btn {
+            background: #b5651d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+        
+        /* Hero Image */
+        .hero {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Page Layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        
+        .cart-section {
+            background: #b5651d;
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            width: 30%;
+        }
+        
+        .order-summary {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            width: 65%;
+        }
+        
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f6e1d3;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .checkout-btn {
+            background: #b5651d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <img src="images/logo.png" alt="Tummy Pillow Logo">
+        </div>
+        <div class="nav-links">
+            <a href="who we are.html">Who We Are</a>
+            <a href="menu.html">Menu</a>
+            <a href="profile.html">Profile</a>
+        </div>
+        <button class="cart-btn">Cart (0)</button>
+    </div>
+
+    <!-- Hero Image -->
+    <img src="images/bg.png" alt="Hero" class="hero">
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Cart Section -->
+        <div class="cart-section">
+            <h3>Cart</h3>
+            <div class="item">
+                <img src="banana-loaf.jpg" alt="Banana Choco-Chip Loaf" width="50">
+                <span>Banana Choco-Chip Loaf</span>
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h3>Orders</h3>
+            <div class="item">
+                <img src="banana-loaf.jpg" alt="Banana Choco-Chip Loaf" width="50">
+                <span>Banana Choco-Chip Loaf</span>
+                <span>200 Php</span>
+            </div>
+            <hr>
+            <p>Items: 1</p>
+            <p>Total: 200 Php</p>
+            <button class="checkout-btn"><a href="delivery.html">Checkout</button></a>
+        </div>
+    </div>
+
+</body>
+</html>
