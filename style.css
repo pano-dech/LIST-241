@@ -1,21 +1,21 @@
-a {
+a { /* links */
     color: black;
     text-decoration: none;
-    width: 20svw;
 }
 
 body {
     background-color: rgb(255, 243, 236);
+    font-family: sans-serif;
     height: auto;
-    padding: 9px;
+    padding: 9px; 
 }
 
-p {
+p { /* paragraphs */
     border-radius: 9px;
     margin: 0%;
 }
 
-th {
+th { /* table headers */
     padding: 0%;
     margin: 0%;
     width: 700px;
