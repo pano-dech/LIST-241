@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_name'] = $user['name'];
                 echo "<p style='color: green;'>Login successful! Welcome, " . htmlspecialchars($user['name']) . "</p>";
 				
-				header("Location: dashboard.php");
+				header("Location: menu.php");
 				exit;
 
             }

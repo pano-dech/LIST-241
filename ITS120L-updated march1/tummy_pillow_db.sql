@@ -44,9 +44,34 @@ CREATE TABLE `products` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+CREATE TABLE `menu_products` (
+  `product_id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `quantity` varchar(50) DEFAULT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `status` varchar(255) DEFAULT 'none',
+  `stock` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
 --
 -- Dumping data for table `products`
 --
+
+INSERT INTO `menu_products` (`product_id`, `name`, `image_url`, `price`, `quantity`, `category`, `status`, `stock`) VALUES 
+							(1, 'Empanadas - Box of 12', 'images/empa1.jpg', '780.00', 'box of 12', 'Bread', 'Available', 15 ),
+                            (2, 'Empanadas - Box of 4', 'images/empa1.jpg', '260.00', 'box of 4', 'Bread', 'Available', 31 ),
+                            (3, 'Garlic Cream Cheese Buns - Box of 6', 'images/gccb1.jpg', '420.00', 'box of 6', 'Regular Sized buns', 'Available', 9),
+                            (4, 'Garlic Cream Cheese Buns - Box of 4', 'images/gccb2.jpg', '420.00', 'box of 4', 'Large sized buns', 'Available', 15 ),
+                            (5, 'Banana Choco-Chip Loaf', 'images/bccl1.jpg', '200.00', '1 Loaf', 'Loaf', 'Available', 10 ),
+                            (6, 'Chocolate Revel Bars', 'images/crb1.jpg', '440.00', 'Box of 16', 'Bar', 'Available', 29 ),
+                            (7, 'Cinnamon Rools', 'images/cr1.jpg', '420.00', 'Box of 4', 'Roll', 'Available', 17 );
+
 
 INSERT INTO `products` (`id`, `name`, `image_url`, `price`, `quantity`, `category`, `status`, `count`, `mac_address`, `username`, `phone_number`, `email`, `address`, `created_at`) VALUES
 (1, 'Empanadas - Box of 12', 'empa1.jpg', 780.00, 'box of 12', 'Menu', 'none', 0, NULL, '', '', '', '', '2025-03-01 03:54:53');

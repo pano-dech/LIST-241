@@ -63,7 +63,7 @@ $countRow = $countQuery->fetch_assoc();
 $count = $countRow["cart_count"] ?? 0;
 
 // Fetch products from database with status 'none'
-$menuResult = $conn->query("SELECT * FROM products WHERE status = 'none'");
+$menuResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Available'");
 $hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Deals' AND status = 'none'");
 ?>
 
@@ -86,7 +86,7 @@ $hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Dea
             <nav>
                 <a href="who-we-are.php">Who We Are</a>
                 <a href="menu.php" style="color: orange; font-weight: bold;">Menu</a>
-                <a href="profile.html">Profile</a>
+                <a href="profile.php">Profile</a>
                 <a href="cart.php">
                     <button class="cart-button">Cart (<span id="cart-count"><?= $count ?></span>)</button>
                 </a>
@@ -129,9 +129,10 @@ $hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Dea
                             <p>
                                 <strong><?= htmlspecialchars($row["name"]) ?></strong><br>
                                 <?= htmlspecialchars(number_format($row["price"], 2)) ?> PHP
+                                stock <?= htmlspecialchars(number_format($row["stock"])) ?>
                             </p>
                             <form method="post">
-                                <input type="hidden" name="product_id" value="<?= $row["id"] ?>">
+                                <input type="hidden" name="product_id" value="<?= $row["product_id"] ?>">
                                 <button type="submit" class="order-button">Add to Cart</button>
                             </form>
                         </div>
