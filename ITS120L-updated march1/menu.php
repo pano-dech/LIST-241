@@ -124,7 +124,7 @@ $hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Dea
                     <div class="menu-item">
                         <div class="menu-box">
                             <div class="menu-image">
-                                <img src="images/<?= htmlspecialchars($row["image_url"]) ?>" alt="<?= htmlspecialchars($row["name"]) ?>">
+                                <img src="<?= htmlspecialchars($row["image_url"]) ?>" alt="<?= htmlspecialchars($row["name"]) ?>">
                             </div>
                             <p>
                                 <strong><?= htmlspecialchars($row["name"]) ?></strong><br>
