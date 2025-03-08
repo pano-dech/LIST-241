@@ -117,31 +117,50 @@ $hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Dea
             <?php endwhile; ?>
         </section>
 
-        <section class="menu">
-            <h2>Our Menu</h2>
-            <div class="menu-items">
-                <?php while ($row = $menuResult->fetch_assoc()): ?>
-                    <div class="menu-item">
-                        <div class="menu-box">
-                            <div class="menu-image">
-                                <img src="<?= htmlspecialchars($row["image_url"]) ?>" alt="<?= htmlspecialchars($row["name"]) ?>">
-                            </div>
-                            <p>
-                                <strong><?= htmlspecialchars($row["name"]) ?></strong><br>
-                                <?= htmlspecialchars(number_format($row["price"], 2)) ?> PHP
-                                stock <?= htmlspecialchars(number_format($row["stock"])) ?>
-                            </p>
-                            <form method="post">
-                                <input type="hidden" name="product_id" value="<?= $row["product_id"] ?>">
-                                <button type="submit" class="order-button">Add to Cart</button>
-                            </form>
+    <section class="menu">
+        <h2>Our Menu</h2>
+        <div class="menu-items">
+            <?php while ($row = $menuResult->fetch_assoc()): ?>
+                <div class="menu-item">
+                    <div class="menu-box">
+                        <div class="menu-image">
+                            <img src="<?= htmlspecialchars($row["image_url"]) ?>" alt="<?= htmlspecialchars($row["name"]) ?>">
                         </div>
+                        <p>
+                            <strong><?= htmlspecialchars($row["name"]) ?></strong><br>
+                            <?= htmlspecialchars(number_format($row["price"], 2)) ?> PHP
+                            stock <?= htmlspecialchars(number_format($row["stock"])) ?>
+                        </p>
+                        <form method="post">
+                            <input type="hidden" name="product_id" value="<?= $row["product_id"] ?>">
+                            <button type="submit" class="order-button">Add to Cart</button>
+                            
+                            <!-- Unique range slider and quantity display -->
+                            <input type="range" min="1" max="<?= $row["stock"] ?>" step="1" value="1" 
+                                class="quantityRange" 
+                                data-target="quantityValue<?= $row["product_id"] ?>" 
+                                oninput="updateQuantity(this)" />
+
+                            <label>Quantity: <span id="quantityValue<?= $row["product_id"] ?>">1</span></label>
+                        </form>
                     </div>
-                <?php endwhile; ?>
-            </div>
-        </section>
+                </div>
+            <?php endwhile; ?>
+        </div>
+    </section>
+
     </div>
+
+   
 </body>
+
+<script>
+    function updateQuantity(slider) {
+        let targetId = slider.getAttribute("data-target");
+        document.getElementById(targetId).textContent = slider.value;
+    }
+</script>
+
 </html>
 
 <?php $conn->close(); ?>
