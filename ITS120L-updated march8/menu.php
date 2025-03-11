@@ -17,7 +17,7 @@ $products = [
     [6, 'Menu', 'Empanadas - Box of 12', 'empa1.jpg', 780.00, 'box of 12']
 ];
 
-$stmt = $conn->prepare("INSERT INTO menu_products (product_id, category, name, image_url, price, quantity, status, stock) 
+$stmt = $conn->prepare("INSERT INTO products (product_id, category, name, image_url, price, quantity, status, stock) 
     SELECT ?, ?, ?, ?, ?, ?, 'Available', 10 
     FROM DUAL WHERE NOT EXISTS (
         SELECT 1 FROM menu_products WHERE product_id = ?
@@ -62,8 +62,8 @@ $countRow = $countQuery->fetch_assoc();
 $count = $countRow["cart_count"] ?? 0;
 
 // Fetch products from database
-$menuResult = $conn->query("SELECT * FROM menu_products WHERE category = 'Menu' AND status = 'Available'");
-$hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE category = 'Hot Deals' AND status = 'Available'");
+$menuResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Available'");
+$hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Available'");
 ?>
 
 <!DOCTYPE html>
@@ -89,6 +89,7 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE category = 'Ho
                 <a href="cart.php">
                     <button class="cart-button">Cart (<span id="cart-count"><?= $count ?></span>)</button>
                 </a>
+                <a href="logout.php"><button onclick="logoutUser()">Logout</button></a>
             </nav>
         </header>
 
@@ -104,7 +105,7 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE category = 'Ho
             <?php while ($deal = $hotDealsResult->fetch_assoc()): ?>
                 <div class="deal">
                     <div class="deal-image">
-                        <img src="images/<?= htmlspecialchars($deal["image_url"]) ?>" alt="<?= htmlspecialchars($deal["name"]) ?>">
+                        <img src="<?= htmlspecialchars($deal["image_url"]) ?>" alt="<?= htmlspecialchars($deal["name"]) ?>">
                     </div>
                     <div class="deal-info">
                         <h3><?= htmlspecialchars($deal["name"]) ?></h3>
@@ -121,7 +122,7 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE category = 'Ho
                     <div class="menu-item">
                         <div class="menu-box">
                             <div class="menu-image">
-                                <img src="images/<?= htmlspecialchars($row["image_url"]) ?>" alt="<?= htmlspecialchars($row["name"]) ?>">
+                                <img src="<?= htmlspecialchars($row["image_url"]) ?>" alt="<?= htmlspecialchars($row["name"]) ?>">
                             </div>
                             <p>
                                 <strong><?= htmlspecialchars($row["name"]) ?></strong><br>
@@ -130,6 +131,13 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE category = 'Ho
                             <form method="post">
                                 <input type="hidden" name="product_id" value="<?= $row["product_id"] ?>">
                                 <button type="submit" class="order-button">Add to Cart</button>
+                                 <!-- Unique range slider and quantity display -->
+                                <input type="range" min="1" max="<?= $row["stock"] ?>" step="1" value="1" 
+                                    class="quantityRange" 
+                                    data-target="quantityValue<?= $row["product_id"] ?>" 
+                                    oninput="updateQuantity(this)" />
+
+                                <label>Quantity: <span id="quantityValue<?= $row["product_id"] ?>">1</span></label>
                             </form>
                         </div>
                     </div>
@@ -138,6 +146,17 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE category = 'Ho
         </section>
     </div>
 </body>
+<script>
+    function logoutUser() {
+        if (confirm("Are you sure you want to log out?")) {
+            window.location.href = "logout.php"; // Redirect to logout script
+        }
+    }
+    function updateQuantity(slider) {
+        let targetId = slider.getAttribute("data-target");
+        document.getElementById(targetId).textContent = slider.value;
+    }
+</script>
 </html>
 
 <?php $conn->close(); ?>
