@@ -1,0 +1,27 @@
+{
+    "name": "tummy-pillow/bakery",
+    "description": "E-commerce web application for a bakery business",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers/functions.php"
+        ]
+    },
+    "require": {
+        "php": ">=8.0",
+        "vlucas/phpdotenv": "^5.5",
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    }
+}

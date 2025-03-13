@@ -1,0 +1,24 @@
+# IDE/OS specific files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Composer dependencies
+/vendor/
+composer.lock
+
+# Environment configuration
+.env
+.env.local
+.env.*.local
+
+# Logs
+/logs/
+*.log
+
+# User uploaded content
+/public/uploads/
+
+# Cache files
+/.phpunit.result.cache
