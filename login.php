@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate MAC address length and format
     if (strlen($mac_address) !== 17 || !preg_match('/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/i', $mac_address)) {
-        die("<p style='color: red;'>System error: Invalid network configuration</p>");
+        die("<div class='notification' style='display:block;'> System error: Invalid network configuration detected. </div>");
     }
 
     // Check if MAC is already online
@@ -53,8 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        // echo "<p style='color: red;'>Login denied: This device is already logged in.</p>";
-        $_SESSION['message'] = 'Login denied: This device is already logged in.';
+        echo "<div class='notification' style='display:block;'> Login denied: This device is already logged in. </div>";
     } else {
         // Check credentials
         $login_query = "SELECT id, name, password_hash, status FROM users WHERE email = ?";
@@ -66,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($user && password_verify($password, $user['password_hash'])) {
             if ($user['status'] === 'online') {
-                echo "<p style='color: red;'>Login denied: Account already in use.</p>";
+                echo "<div class='notification' style='display:block;'> Login denied: Account already in use. </div>";
             } else {
                 // Update user status and MAC
                 $update_query = "UPDATE users SET status = 'online', mac_address = ? WHERE id = ?";
@@ -76,10 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
-                echo "<p style='color: green;'>Login successful! Welcome, " . htmlspecialchars($user['name']) . "</p>";
+                echo "<div class='notification' style='display:block;'> Login successful! Welcome, " . htmlspecialchars($user['name']) . " </div>";
+                echo '<meta http-equiv="refresh" content="1; url=menu.php">';
             }
         } else {
-            echo "<p style='color: red;'>Invalid email or password!</p>";
+            echo "<div class='notification' style='display:block;'> Invalid email or password! </div>";
         }
     }
 

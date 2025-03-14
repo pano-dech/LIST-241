@@ -49,28 +49,28 @@ session_start();
                     // Validate name (only letters and spaces)
                     if (!preg_match("/^[a-zA-Z ]+$/", $name)) {
                         $_SESSION['message'] = 'Invalid name! Only letters and spaces are allowed.';
-                        header("Location: register.php");
+                        header("Location: /register.php");
                         exit();
                     }
 
                     // Validate Philippine phone number
                     if (!preg_match('/^(09\d{9}|\+639\d{9}|\(0\d{2}\)\d{7})$/', $number)) {
                         $_SESSION['message'] = 'Invalid Philippine phone number format!';
-                        header("Location: register.php");
+                        header("Location: /register.php");
                         exit();
                     }
                     
                     // Validate email format
                     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         $_SESSION['message'] = 'Invalid email format!';
-                        header("Location: register.php");
+                        header("Location: /register.php");
                         exit();
                     }
                     
                     // Validate password (at least 8 chars, 1 letter, 1 number, 1 special char)
                     if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $password)) {
                         $_SESSION['message'] = 'Password must be at least 8 characters long, include a letter, a number, and a special character.';
-                        header("Location: register.php");
+                        header("Location: /register.php");
                         exit();
                     }
                     
@@ -100,7 +100,7 @@ session_start();
                     
                     $stmt->close();
                     $conn->close();
-                    header("Location: register.php");
+                    header("Location: /register.php");
                     exit();
                 }
                 ?>

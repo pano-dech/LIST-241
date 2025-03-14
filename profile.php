@@ -27,7 +27,7 @@ function getMacAddress() {
 
 $macAddress = getMacAddress();
 
-$conn = new mysqli('localhost', 'root', '', 'tummy_pillow_db');
+include 'db_connect.php';
 
 if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
@@ -199,7 +199,7 @@ if (isset($_POST['logout'])) {
         // Hide notification after a few seconds
         setTimeout(function() {
             document.getElementById('notification').style.display = 'none';
-        }, 5000);
+        }, 3000);
     </script>
 </body>
 </html>

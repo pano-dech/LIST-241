@@ -485,6 +485,7 @@ nav a, .cart-button {
     background: white;
     border-radius: 8px;
     overflow: hidden;
+    table-layout: fixed;
 }
 
 .cart-table th, .cart-table td {
@@ -497,6 +498,21 @@ nav a, .cart-button {
     background: #ff8c00;
     color: white;
     font-weight: bold;
+}
+
+.cart-table td:first-child {
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.cart-table td:nth-child(3) {
+    min-width: 120px;
+}
+
+.cart-table td span {
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
 }
 
 .cart-total-label {

@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                             <td><?php echo $row['address']; ?></td>
 							<td><?php echo $row['phone_number']; ?></td>
                             <td><?php echo $row['count']; ?></td>
-                            <td><?php echo number_format($row['price'], 2); ?></td>
+                            <td><?php echo "PHP" . number_format($row['price'], 2); ?></td>
                             <td class="status <?php echo str_replace(' ', '-', strtolower($row['status'])); ?>">
                                 <?php echo $row['status']; ?>
                             </td>

@@ -9,12 +9,12 @@ if ($conn->connect_error) {
 
 // Insert predefined products if they do not exist
 $products = [
-    [1, 'Hot Deals', 'Garlic Cream Cheese Buns - Box of 6 Regular Size Buns', 'gccb1.jpg', 420.00, 'box of 6'],
-    [2, 'Hot Deals', 'Garlic Cream Cheese Buns - Box of 4 Big Size Buns', 'gccb1.jpg', 420.00, 'box of 4'],
-    [3, 'Hot Deals', 'Chocolate Revel Bars - Box of 16 Bars', 'crb2.jpg', 440.00, 'box of 16'],
-    [4, 'Menu', 'Cinnamon Rolls - Box of 4', 'cr3.jpg', 420.00, 'box of 4'],
-    [5, 'Menu', 'Empanadas - Box of 4', 'empa1.jpg', 260.00, 'box of 4'],
-    [6, 'Menu', 'Empanadas - Box of 12', 'empa1.jpg', 780.00, 'box of 12']
+    [1, 'Hot Deals', 'Garlic Cream Cheese Buns - Box of 6 Regular Size Buns', 'gccb1.jpg', 420.00, 'Box of 6'],
+    [2, 'Hot Deals', 'Garlic Cream Cheese Buns - Box of 4 Big Size Buns', 'gccb1.jpg', 420.00, 'Box of 4'],
+    [3, 'Hot Deals', 'Chocolate Revel Bars - Box of 16 Bars', 'crb2.jpg', 440.00, 'Box of 16'],
+    [4, 'Menu', 'Cinnamon Rolls - Box of 4', 'cr3.jpg', 420.00, 'Box of 4'],
+    [5, 'Menu', 'Empanadas - Box of 4', 'empa1.jpg', 260.00, 'Box of 4'],
+    [6, 'Menu', 'Empanadas - Box of 12', 'empa1.jpg', 780.00, 'Box of 12']
 ];
 
 $stmt = $conn->prepare("INSERT INTO products (id, category, name, image_url, price, quantity, status, count, username, phone_number, email, address, created_at)
@@ -78,24 +78,9 @@ $hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Dea
 <body>
     <div class="container">
         <header>
-            <div class="logo-container">
-                <a href="index.php">
-                    <img src="images/logo.png" alt="Tummy Pillow Logo">
-                </a>
-            </div>
-            <nav>
-                <a href="who-we-are.php">Who We Are</a>
-                <a href="menu.php" style="color: orange; font-weight: bold;">Menu</a>
-                <a href="profile.php">Profile</a>
-                <a href="cart.php">
-                    <button class="cart-button">Cart (<span id="cart-count"><?= $count ?></span>)</button>
-                </a>
-            </nav>
+            <?php include 'header.php'; ?>
         </header>
 
-        <section class="hero">
-            <img src="images/gccb2.jpg" alt="Bread and Flowers">
-        </section>
         <section class="welcome-message">
             <h2>Welcome to Tummy Pillow, where there's comfort in every bite!</h2>
         </section>
@@ -111,7 +96,7 @@ $hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Dea
                     </div>
                     <div class="deal-info">
                         <h3><?= htmlspecialchars($deal["name"]) ?></h3>
-                        <p><strong><?= htmlspecialchars($deal["quantity"]) ?></strong> - <?= number_format($deal["price"], 2) ?> PHP</p>
+                        <p><strong><?= htmlspecialchars($deal["quantity"]) ?></strong> - PHP<?= number_format($deal["price"], 2) ?></p>
                     </div>
                 </div>
             <?php endwhile; ?>
@@ -128,7 +113,7 @@ $hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Dea
                             </div>
                             <p>
                                 <strong><?= htmlspecialchars($row["name"]) ?></strong><br>
-                                <?= htmlspecialchars(number_format($row["price"], 2)) ?> PHP
+                                PHP<?= htmlspecialchars(number_format($row["price"], 2)) ?>
                             </p>
                             <form method="post">
                                 <input type="hidden" name="product_id" value="<?= $row["id"] ?>">

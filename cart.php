@@ -38,12 +38,12 @@ while ($row = $query->fetch_assoc()) {
                 }
 
                 if (data.subtotal !== undefined && document.getElementById(`subtotal-${id}`)) {
-                    document.getElementById(`subtotal-${id}`).textContent = data.subtotal + " PHP";
+                    document.getElementById(`subtotal-${id}`).textContent = "PHP" + data.subtotal;
                 }
 
                 // Update cart total and count
                 if (document.getElementById("cart-total")) {
-                    document.getElementById("cart-total").textContent = data.grand_total + " PHP";
+                    document.getElementById("cart-total").textContent = "PHP" + data.grand_total;
                 }
                 if (document.getElementById("cart-count")) {
                     document.getElementById("cart-count").textContent = data.cart_count;
@@ -81,7 +81,7 @@ while ($row = $query->fetch_assoc()) {
         .then(data => {
             if (data.success) {
                 document.getElementById("cart-count").textContent = "0";
-                document.getElementById("cart-total").textContent = "0.00 PHP";
+                document.getElementById("cart-total").textContent = "PHP0.00";
 
                 // Remove all rows but keep the table structure
                 document.querySelector("tbody").innerHTML = "";
@@ -143,20 +143,20 @@ while ($row = $query->fetch_assoc()) {
                         ?>
                         <tr id="row-<?= $item['id'] ?>">
                             <td><?= htmlspecialchars($item["name"]) ?></td>
-                            <td><?= number_format($item["price"], 2) ?> PHP</td>
+                            <td>PHP<?= number_format($item["price"], 2) ?></td>
                             <td>
                                 <button class="qty-btn" onclick="updateCart('decrease', <?= $item['id'] ?>)">−</button>
                                 <span id="quantity-<?= $item['id'] ?>"><?= (int) $item["count"] ?></span> 
                                 <button class="qty-btn" onclick="updateCart('increase', <?= $item['id'] ?>)">+</button>
                             </td>
-                            <td id="subtotal-<?= $item['id'] ?>"><?= number_format($subtotal, 2) ?> PHP</td>
+                            <td id="subtotal-<?= $item['id'] ?>">PHP<?= number_format($subtotal, 2) ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3" class="cart-total-label"><strong>Grand Total:</strong></td>
-                            <td class="cart-total-value"><strong id="cart-total"><?= number_format($total, 2) ?> PHP</strong></td>
+                            <td class="cart-total-value"><strong id="cart-total">PHP<?= number_format($total, 2) ?></strong></td>
                         </tr>
                     </tfoot>
                 </table>

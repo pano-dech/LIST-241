@@ -116,7 +116,7 @@ if ($salesResult) {
     </table>
 
     <div class="total-revenue">
-        Total Revenue: $<?php echo number_format($totalRevenue, 2); ?>
+        Total Revenue: PHP<?php echo number_format($totalRevenue, 2); ?>
     </div>
 </body>
 </html>
