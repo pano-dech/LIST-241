@@ -13,6 +13,9 @@ $cart_items = [];
 while ($row = $query->fetch_assoc()) {
     $cart_items[] = $row;
 }
+
+// Check if user is logged in
+// $userFound = isset($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>
@@ -162,7 +165,11 @@ while ($row = $query->fetch_assoc()) {
                 </table>
                 <div class="cart-actions">
                     <button class="clear-cart-button" onclick="clearCart()">Clear Cart</button>
-                    <button class="checkout-button" onclick="purchaseCart()">Proceed to Checkout</button>
+                    <?php if ($_SESSION['userFound']): ?>
+                        <button class="checkout-button" onclick="purchaseCart()">Proceed to Checkout</button>
+                    <?php else: ?>
+                        <button class="checkout-button" onclick="window.location.href='login.php?redirect=cart'">Login</button>
+                    <?php endif; ?>
                 </div>
             <?php else: ?>
                 <div class="empty-cart">

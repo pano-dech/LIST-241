@@ -1,4 +1,5 @@
 <?php
+session_start(); # for userFound
 function getMacAddress() {
     ob_start();
     system('ipconfig /all');
@@ -40,7 +41,7 @@ $stmt->bind_param('s', $macAddress);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$userFound = false; // Flag to check if an online user is found
+$_SESSION['userFound'] = false; // Flag to check if an online user is found
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +101,7 @@ $userFound = false; // Flag to check if an online user is found
         // Loop through the results to find an online user
         while ($user = $result->fetch_assoc()) {
             if ($user['status'] === 'online') {
-                $userFound = true; // Set the flag to true
+                $_SESSION['userFound'] = true; // Set the flag to true
                 echo '<section class="profile-section" style="display: flex; justify-content: center; align-items: center; height: auto;">
                 <div class="profile-container" style="text-align: center;">
                     <h2>Your Profile</h2>
@@ -176,6 +177,7 @@ if (isset($_POST['logout'])) {
     }
     $logoutStmt->bind_param('s', $macAddress);
     $logoutStmt->execute();
+    $_SESSION['userFound'] = false;
     echo "<script>document.getElementById('notification').innerText = 'You have been logged out.'; document.getElementById('notification').style.display = 'block';</script>";
     $logoutStmt->close();
 }
@@ -186,8 +188,9 @@ if (isset($_POST['logout'])) {
             }
         }
 
-        if (!$userFound) {
+        if (!$_SESSION['userFound']) {
             echo "<script>document.getElementById('notification').innerText = 'No online user found with this MAC address.'; document.getElementById('notification').style.display = 'block';</script>";
+            echo '<meta http-equiv="refresh" content="1; url=login.php">';
         }
 
         $stmt->close();

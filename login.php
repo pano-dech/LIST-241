@@ -75,8 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
+                $_SESSION['userFound'] = true;
                 echo "<div class='notification' style='display:block;'> Login successful! Welcome, " . htmlspecialchars($user['name']) . " </div>";
-                echo '<meta http-equiv="refresh" content="1; url=menu.php">';
+
+                // Redirect based on the query parameter
+                if (isset($_GET['redirect']) && $_GET['redirect'] === 'cart') {
+                    echo '<meta http-equiv="refresh" content="1; url=cart.php">';
+                } else {
+                    echo '<meta http-equiv="refresh" content="1; url=menu.php">';
+                }
             }
         } else {
             echo "<div class='notification' style='display:block;'> Invalid email or password! </div>";
@@ -104,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="login-section">
         <div class="login-container">
             <h2>Login</h2>
-            <form action="login.php" method="POST">
+            <form action="login.php<?php echo isset($_GET['redirect']) ? '?redirect=' . htmlspecialchars($_GET['redirect']) : ''; ?>" method="POST">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
                 
