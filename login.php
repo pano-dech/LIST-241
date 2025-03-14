@@ -30,6 +30,11 @@ function getMacAddress() {
     return '00:00:00:00:00:00'; // Fallback
 }
 
+if (isset($_SESSION['message'])) {
+    echo "<div class='notification' style='display:block;'>" . $_SESSION['message'] . "</div>";
+    unset($_SESSION['message']);
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -48,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        echo "<p style='color: red;'>Login denied: This device is already logged in.</p>";
+        // echo "<p style='color: red;'>Login denied: This device is already logged in.</p>";
+        $_SESSION['message'] = 'Login denied: This device is already logged in.';
     } else {
         // Check credentials
         $login_query = "SELECT id, name, password_hash, status FROM users WHERE email = ?";

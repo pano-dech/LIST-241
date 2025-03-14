@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$dbname = "tummy_pillow_db"; // Replace with your actual database name
+$dbname = "tummy_pillow_db";
 
 $conn = new mysqli($host, $user, $password, $dbname);
 

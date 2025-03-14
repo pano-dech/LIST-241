@@ -1,5 +1,5 @@
 <?php 
-session_start(); // Start session for notifications
+session_start();
 ?>
 <!DOCTYPE html> 
 <html lang="en">
@@ -8,24 +8,6 @@ session_start(); // Start session for notifications
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Tummy Pillow</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .notification {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 16px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 9999;
-            display: none;
-        }
-        .notification.error {
-            background-color: #f44336;
-        }
-    </style>
 </head>
 <body>
     <div class="container">

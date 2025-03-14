@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 
-$conn = new mysqli("localhost", "root", "", "tummy_pillow_db");
+include 'db_connect.php';
 
 // Check for connection errors
 if ($conn->connect_error) {

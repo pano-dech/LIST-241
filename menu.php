@@ -1,6 +1,6 @@
-<?php    
+<?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "tummy_pillow_db");
+include 'db_connect.php';
 
 // Check for connection errors
 if ($conn->connect_error) {
@@ -17,53 +17,54 @@ $products = [
     [6, 'Menu', 'Empanadas - Box of 12', 'empa1.jpg', 780.00, 'box of 12']
 ];
 
-$stmt = $conn->prepare("INSERT INTO products (product_id, category, name, image_url, price, quantity, status, stock) 
-    SELECT ?, ?, ?, ?, ?, ?, 'Available', 10 
-    FROM DUAL WHERE NOT EXISTS (
-        SELECT 1 FROM menu_products WHERE product_id = ?
-    )");
-    
+$stmt = $conn->prepare("INSERT INTO products (id, category, name, image_url, price, quantity, status, count, username, phone_number, email, address, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, 'none', 0, '', '', '', '', NOW())
+    ON DUPLICATE KEY UPDATE 
+    category=VALUES(category), name=VALUES(name), image_url=VALUES(image_url), 
+    price=VALUES(price), quantity=VALUES(quantity)");
+
 foreach ($products as $product) {
-    list($product_id, $category, $name, $image_url, $price, $quantity) = $product;
-    $stmt->bind_param("isssdis", $product_id, $category, $name, $image_url, $price, $quantity, $product_id);
+    $stmt->bind_param("isssds", ...$product);
     $stmt->execute();
 }
 $stmt->close();
 
 // Handle Add to Cart request
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["product_id"])) {
-    $product_id = intval($_POST["product_id"]);
-    $user_id = $_SESSION['user_id'] ?? null;
+    $product_id = (int) $_POST["product_id"];
+    $username = $_POST['username'] ?? '';
+    $phone_number = $_POST['phone_number'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $address = $_POST['address'] ?? '';
 
-    if ($user_id) {
-        $stmt = $conn->prepare("SELECT quantity FROM cart WHERE product_id = ? AND user_id = ?");
-        $stmt->bind_param("ii", $product_id, $user_id);
-        $stmt->execute();
-        $stmt->store_result();
-        
-        if ($stmt->num_rows > 0) {
-            $stmt = $conn->prepare("UPDATE cart SET quantity = quantity + 1 WHERE product_id = ? AND user_id = ?");
-        } else {
-            $stmt = $conn->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, 1)");
-        }
-        
-        $stmt->bind_param("ii", $user_id, $product_id);
-        $stmt->execute();
-        $stmt->close();
-    } else {
-        echo "<script>alert('Please log in to add items to your cart.');</script>";
+    // Securely fetch product details
+    $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $product = $result->fetch_assoc();
+    $stmt->close();
+
+    if ($product) {
+        // Create a new cart entry with user info
+        $insert_stmt = $conn->prepare("INSERT INTO products (category, name, image_url, price, quantity, status, count, username, phone_number, email, address, created_at)
+            VALUES (?, ?, ?, ?, ?, 'on cart', 1, ?, ?, ?, ?, NOW())");
+        $insert_stmt->bind_param("sssdsssss", $product['category'], $product['name'], $product['image_url'], 
+                                $product['price'], $product['quantity'], $username, $phone_number, 
+                                $email, $address);
+        $insert_stmt->execute();
+        $insert_stmt->close();
     }
 }
 
 // Count total cart items
-$user_id = intval($_SESSION['user_id'] ?? 0);
-$countQuery = $conn->query("SELECT SUM(quantity) AS cart_count FROM cart WHERE user_id = $user_id");
+$countQuery = $conn->query("SELECT SUM(count) AS cart_count FROM products WHERE status = 'on cart'");
 $countRow = $countQuery->fetch_assoc();
 $count = $countRow["cart_count"] ?? 0;
 
-// Fetch products from database
-$menuResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Available'");
-$hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Available'");
+// Fetch products from database with status 'none'
+$menuResult = $conn->query("SELECT * FROM products WHERE status = 'none'");
+$hotDealsResult = $conn->query("SELECT * FROM products WHERE category = 'Hot Deals' AND status = 'none'");
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +90,6 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Avai
                 <a href="cart.php">
                     <button class="cart-button">Cart (<span id="cart-count"><?= $count ?></span>)</button>
                 </a>
-                <a href="logout.php"><button onclick="logoutUser()">Logout</button></a>
             </nav>
         </header>
 
@@ -102,10 +102,12 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Avai
 
         <section class="hot-deals">
             <h2>Hot Deals!</h2>
-            <?php while ($deal = $hotDealsResult->fetch_assoc()): ?>
+            <?php 
+                while ($deal = $hotDealsResult->fetch_assoc()): 
+            ?>
                 <div class="deal">
                     <div class="deal-image">
-                        <img src="<?= htmlspecialchars($deal["image_url"]) ?>" alt="<?= htmlspecialchars($deal["name"]) ?>">
+                        <img src="images/<?= htmlspecialchars($deal["image_url"]) ?>" alt="<?= htmlspecialchars($deal["name"]) ?>">
                     </div>
                     <div class="deal-info">
                         <h3><?= htmlspecialchars($deal["name"]) ?></h3>
@@ -122,22 +124,17 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Avai
                     <div class="menu-item">
                         <div class="menu-box">
                             <div class="menu-image">
-                                <img src="<?= htmlspecialchars($row["image_url"]) ?>" alt="<?= htmlspecialchars($row["name"]) ?>">
+                                <img src="images/<?= htmlspecialchars($row["image_url"]) ?>" alt="<?= htmlspecialchars($row["name"]) ?>">
                             </div>
                             <p>
                                 <strong><?= htmlspecialchars($row["name"]) ?></strong><br>
-                                <?= number_format($row["price"], 2) ?> PHP
+                                <?= htmlspecialchars(number_format($row["price"], 2)) ?> PHP
                             </p>
                             <form method="post">
-                                <input type="hidden" name="product_id" value="<?= $row["product_id"] ?>">
+                                <input type="hidden" name="product_id" value="<?= $row["id"] ?>">
+								
+								
                                 <button type="submit" class="order-button">Add to Cart</button>
-                                 <!-- Unique range slider and quantity display -->
-                                <input type="range" min="1" max="<?= $row["stock"] ?>" step="1" value="1" 
-                                    class="quantityRange" 
-                                    data-target="quantityValue<?= $row["product_id"] ?>" 
-                                    oninput="updateQuantity(this)" />
-
-                                <label>Quantity: <span id="quantityValue<?= $row["product_id"] ?>">1</span></label>
                             </form>
                         </div>
                     </div>
@@ -146,17 +143,6 @@ $hotDealsResult = $conn->query("SELECT * FROM menu_products WHERE status = 'Avai
         </section>
     </div>
 </body>
-<script>
-    function logoutUser() {
-        if (confirm("Are you sure you want to log out?")) {
-            window.location.href = "logout.php"; // Redirect to logout script
-        }
-    }
-    function updateQuantity(slider) {
-        let targetId = slider.getAttribute("data-target");
-        document.getElementById(targetId).textContent = slider.value;
-    }
-</script>
 </html>
 
 <?php $conn->close(); ?>
