@@ -37,7 +37,8 @@ if (isset($_SESSION['delivered_products'])) {
 
     if (!empty($productIds)) {
         $ids = implode(',', array_map('intval', $productIds));
-        $query = $conn->query("SELECT * FROM products WHERE id IN ($ids)");
+        // Add count > 0 condition to the query
+        $query = $conn->query("SELECT * FROM products WHERE id IN ($ids) AND count > 0");
         if ($query) {
             while ($row = $query->fetch_assoc()) {
                 $deliveredProducts[] = $row;
@@ -86,11 +87,13 @@ if (isset($_SESSION['delivered_products'])) {
     </section>
 
     <?php
+    // Update the total price calculation to only include items with quantity > 0
     $totalPrice = 0;
-
     if (!empty($deliveredProducts)) {
         foreach ($deliveredProducts as $product) {
-            $totalPrice += floatval($product['price'] * intval($product['count']));
+            if (intval($product['count']) > 0) {
+                $totalPrice += floatval($product['price'] * intval($product['count']));
+            }
         }
     }
     ?>
@@ -111,15 +114,17 @@ if (isset($_SESSION['delivered_products'])) {
                 </thead>
                 <tbody>
                     <?php foreach ($deliveredProducts as $product): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($product['name']); ?></td>
-                            <td><?php echo htmlspecialchars($product['count']); ?></td>
-                            <td><?php echo htmlspecialchars($product['price']); ?></td>
-                        </tr>
+                        <?php if (intval($product['count']) > 0): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($product['name']); ?></td>
+                                <td><?php echo htmlspecialchars($product['count']); ?></td>
+                                <td>PHP <?php echo htmlspecialchars(number_format($product['price'], 2)); ?></td>
+                            </tr>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <h4><strong>Total Price: <?php echo htmlspecialchars(number_format($totalPrice, 2)); ?></strong></h4>
+            <h4><strong>Total Price: PHP <?php echo htmlspecialchars(number_format($totalPrice, 2)); ?></strong></h4>
             <p><strong>Thank you for your purchase!</strong></p>
         <?php else: ?>
             <p>No items were delivered at this time.</p>
