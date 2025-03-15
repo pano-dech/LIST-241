@@ -30,6 +30,11 @@ function getMacAddress() {
     return '00:00:00:00:00:00'; // Fallback
 }
 
+if ($_SESSION['userFound']) {
+    echo "<div class='notification' style='display:block;'> User is already online. </div>";
+    echo '<meta http-equiv="refresh" content="1; url=profile.php">';
+}
+
 if (isset($_SESSION['message'])) {
     echo "<div class='notification' style='display:block;'>" . $_SESSION['message'] . "</div>";
     unset($_SESSION['message']);
