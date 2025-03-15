@@ -179,6 +179,7 @@ if (isset($_POST['logout'])) {
     $logoutStmt->execute();
     $_SESSION['userFound'] = false;
     echo "<script>document.getElementById('notification').innerText = 'You have been logged out.'; document.getElementById('notification').style.display = 'block';</script>";
+    echo '<meta http-equiv="refresh" content="1; url=login.php">';
     $logoutStmt->close();
 }
 
@@ -188,7 +189,7 @@ if (isset($_POST['logout'])) {
             }
         }
 
-        if (!$_SESSION['userFound']) {
+        if (!$_SESSION['userFound'] && !isset($_POST['logout'])) {
             echo "<script>document.getElementById('notification').innerText = 'No online user found with this MAC address.'; document.getElementById('notification').style.display = 'block';</script>";
             echo '<meta http-equiv="refresh" content="1; url=login.php">';
         }
